@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="theme-color" content="#0f172a">
+<title>TOKO SIGER — Kasir Galon</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f5f7fb;color:#172033}
+button,input,select{font:inherit}button{cursor:pointer;border:0}.app{max-width:1150px;margin:auto;padding-bottom:90px}
+header{padding:22px 18px 10px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.brand{display:flex;align-items:center;gap:12px}.logo{width:45px;height:45px;border-radius:15px;background:#111827;color:white;display:grid;place-items:center;font-weight:800;box-shadow:0 10px 25px #11182722}.brand h1{font-size:20px;margin:0}.brand small{color:#7b8495}
+.iconbtn{width:42px;height:42px;border-radius:13px;background:white;box-shadow:0 8px 22px #1d273812}
+main{padding:10px 18px}.page{display:none}.page.active{display:block}
+.hero{background:linear-gradient(135deg,#111827,#26334b);color:white;border-radius:25px;padding:23px;box-shadow:0 18px 45px #11182725;margin-bottom:16px}
+.hero .label{opacity:.7;font-size:13px}.balance{font-size:31px;font-weight:800;margin:6px 0 16px}.herorow{display:flex;justify-content:space-between;gap:10px}.mini{background:#ffffff12;border:1px solid #ffffff12;border-radius:16px;padding:12px;flex:1}.mini small{opacity:.65}.mini b{display:block;margin-top:4px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.card{background:white;border:1px solid #e9edf3;border-radius:20px;padding:17px;box-shadow:0 8px 25px #1d273808}.stat .top{display:flex;justify-content:space-between;color:#7b8495;font-size:13px}.stat strong{display:block;font-size:21px;margin-top:8px}.pill{padding:7px 9px;border-radius:10px;background:#f1f5f9}
+.sectiontitle{display:flex;justify-content:space-between;align-items:center;margin:23px 0 11px}.sectiontitle h2{font-size:16px;margin:0}.muted{color:#7b8495;font-size:13px}
+.quick{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.quick button{padding:15px;border-radius:17px;background:white;border:1px solid #e8ebf1;text-align:left;box-shadow:0 7px 20px #1d273808}.quick b{display:block;margin-top:7px}
+.form{background:white;border:1px solid #e8ebf1;border-radius:22px;padding:18px;box-shadow:0 8px 25px #1d273808}.field{margin-bottom:13px}.field label{display:block;font-size:12px;color:#687286;margin-bottom:7px}.field input,.field select{width:100%;padding:13px 14px;border:1px solid #dfe5ee;border-radius:13px;outline:0;background:#fbfcfe}.field input:focus,.field select:focus{border-color:#667085;box-shadow:0 0 0 3px #66708512}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}.btn{width:100%;padding:13px 15px;border-radius:13px;font-weight:750}.primary{background:#111827;color:#fff}.green{background:#087f5b;color:white}.red{background:#fff1f2;color:#be123c}.ghost{background:#f1f5f9;color:#334155}
+.productbox{display:flex;align-items:center;justify-content:space-between;background:#f8fafc;border-radius:16px;padding:15px;margin-bottom:14px}.qty{display:flex;align-items:center;gap:9px}.qty button{width:35px;height:35px;border-radius:10px;background:white;border:1px solid #e1e6ee}.qty input{width:55px;text-align:center;padding:8px;border:1px solid #e1e6ee;border-radius:10px}
+.totalbox{display:flex;justify-content:space-between;align-items:end;padding:15px 0;border-top:1px dashed #dce2eb;margin-top:10px}.totalbox strong{font-size:27px}
+.tablewrap{overflow:auto;background:white;border-radius:20px;border:1px solid #e8ebf1}.table{width:100%;border-collapse:collapse;min-width:650px}.table th,.table td{padding:13px;text-align:left;border-bottom:1px solid #eef1f5;font-size:13px}.table th{color:#7b8495;font-weight:650;background:#fafbfc}.badge{display:inline-block;padding:5px 8px;border-radius:8px;font-size:11px;font-weight:700}.badge.in{background:#e8f7f1;color:#087f5b}.badge.out{background:#fff0f1;color:#be123c}
+.empty{text-align:center;padding:30px;color:#8a93a3}.danger{color:#be123c;background:none}
+nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(100%,1150px);padding:10px 14px;z-index:10;background:#ffffffee;backdrop-filter:blur(15px);border-top:1px solid #e7ebf1;display:grid;grid-template-columns:repeat(4,1fr);gap:5px}nav button{background:none;color:#7b8495;padding:8px 4px;border-radius:13px;font-size:11px}nav button.active{background:#111827;color:white}nav span{display:block;font-size:19px;margin-bottom:3px}
+.toast{position:fixed;top:18px;left:50%;transform:translate(-50%,-20px);opacity:0;background:#111827;color:white;padding:12px 17px;border-radius:13px;z-index:50;transition:.25s;pointer-events:none}.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:750px){.grid{grid-template-columns:1fr 1fr}.quick{grid-template-columns:1fr 1fr}.row{grid-template-columns:1fr}.hero{border-radius:21px}.balance{font-size:27px}}
+@media(min-width:900px){nav{position:static;transform:none;border:0;background:transparent;backdrop-filter:none;display:flex;gap:8px;padding:0 18px 15px}nav button{flex:0 0 120px;background:white;border:1px solid #e7ebf1}main{padding-top:0}}
+</style>
+</head>
+<body>
+<div class="app">
+<header><div class="brand"><div class="logo">TS</div><div><h1>TOKO SIGER</h1><small>Kasir & Keuangan</small></div></div><button class="iconbtn" onclick="backup()">↥</button></header>
+
+<main>
+<section id="dashboard" class="page active">
+<div class="hero"><div class="label">Saldo toko</div><div class="balance" id="saldo">Rp0</div><div class="herorow"><div class="mini"><small>Stok galon</small><b id="stokHero">20 galon</b></div><div class="mini"><small>Omzet</small><b id="omzetHero">Rp0</b></div></div></div>
+<div class="grid">
+<div class="card stat"><div class="top">Penjualan hari ini <span class="pill">🛒</span></div><strong id="salesToday">Rp0</strong></div>
+<div class="card stat"><div class="top">Uang masuk <span class="pill">↗</span></div><strong id="inToday">Rp0</strong></div>
+<div class="card stat"><div class="top">Uang keluar <span class="pill">↘</span></div><strong id="outToday">Rp0</strong></div>
+<div class="card stat"><div class="top">Laba <span class="pill">✦</span></div><strong id="profit">Rp0</strong></div>
+</div>
+<div class="sectiontitle"><h2>Aksi cepat</h2></div>
+<div class="quick"><button onclick="showPage('kasir')">🛒<b>Jual galon</b><span class="muted">Catat penjualan</span></button><button onclick="showPage('stok')">📦<b>Tambah stok</b><span class="muted">Stok saat ini <span id="quickStock">20</span></span></button><button onclick="showPage('keuangan')">💸<b>Uang keluar</b><span class="muted">Catat pengeluaran</span></button></div>
+<div class="sectiontitle"><h2>Transaksi terbaru</h2><button class="muted" onclick="showPage('laporan')">Lihat semua</button></div>
+<div id="recent"></div>
+</section>
+
+<section id="kasir" class="page">
+<div class="sectiontitle"><h2>Kasir</h2><span class="muted">Stok: <b id="kasirStock">20</b></span></div>
+<div class="form">
+<div class="productbox"><div><b>💧 Le Minerale Galon 15L</b><div class="muted">Harga jual Rp20.000/galon</div></div><span class="badge in">TERSEDIA</span></div>
+<div class="field"><label>Nama pelanggan (opsional)</label><input id="customer" placeholder="Contoh: Pak Budi"></div>
+<div class="field"><label>Jumlah galon</label><div class="qty"><button onclick="changeQty(-1)">−</button><input id="qty" type="number" min="1" value="1" oninput="updateTotal()"><button onclick="changeQty(1)">+</button></div></div>
+<div class="totalbox"><span>Total bayar</span><strong id="saleTotal">Rp20.000</strong></div>
+<button class="btn green" onclick="sell()">✓ Simpan Penjualan</button>
+</div>
+</section>
+
+<section id="stok" class="page">
+<div class="sectiontitle"><h2>Stok Galon</h2></div>
+<div class="grid"><div class="card stat"><div class="top">Stok sekarang</div><strong id="stockPage">20</strong><span class="muted">galon</span></div><div class="card stat"><div class="top">Stok awal</div><strong>20</strong><span class="muted">galon</span></div></div>
+<div class="sectiontitle"><h2>Tambah stok</h2></div>
+<div class="form"><div class="field"><label>Jumlah galon masuk</label><input id="addStockQty" type="number" min="1" placeholder="Contoh: 10"></div><div class="field"><label>Keterangan</label><input id="stockNote" placeholder="Contoh: Kiriman sales"></div><button class="btn primary" onclick="addStock()">+ Tambah Stok</button></div>
+<div class="sectiontitle"><h2>Riwayat stok</h2></div><div id="stockHistory"></div>
+</section>
+
+<section id="keuangan" class="page">
+<div class="sectiontitle"><h2>Keuangan</h2></div>
+<div class="grid"><div class="card stat"><div class="top">Total masuk</div><strong id="allIn">Rp0</strong></div><div class="card stat"><div class="top">Total keluar</div><strong id="allOut">Rp0</strong></div></div>
+<div class="sectiontitle"><h2>Catat uang keluar</h2></div>
+<div class="form"><div class="field"><label>Nominal</label><input id="expenseAmount" type="number" min="1" placeholder="Contoh: 50000"></div><div class="field"><label>Keterangan</label><input id="expenseNote" placeholder="Contoh: Belanja kebutuhan toko"></div><button class="btn red" onclick="expense()">− Simpan Uang Keluar</button></div>
+</section>
+
+<section id="laporan" class="page">
+<div class="sectiontitle"><h2>Laporan</h2><button class="btn ghost" style="width:auto;padding:8px 11px" onclick="resetData()">Reset</button></div>
+<div class="grid"><div class="card stat"><div class="top">Omzet</div><strong id="reportSales">Rp0</strong></div><div class="card stat"><div class="top">Modal barang terjual</div><strong id="reportCost">Rp0</strong></div><div class="card stat"><div class="top">Laba kotor</div><strong id="reportProfit">Rp0</strong></div><div class="card stat"><div class="top">Saldo</div><strong id="reportBalance">Rp0</strong></div></div>
+<div class="sectiontitle"><h2>Riwayat transaksi</h2></div><div id="transactions"></div>
+</section>
+</main>
+
+<nav>
+<button class="active" data-page="dashboard" onclick="showPage('dashboard')"><span>⌂</span>Beranda</button>
+<button data-page="kasir" onclick="showPage('kasir')"><span>＋</span>Kasir</button>
+<button data-page="stok" onclick="showPage('stok')"><span>▣</span>Stok</button>
+<button data-page="laporan" onclick="showPage('laporan')"><span>▤</span>Laporan</button>
+</nav>
+</div>
+<div id="toast" class="toast"></div>
+
+<script>
+const BUY=18500, SELL=20000, KEY='toko_siger_v1';
+let data=JSON.parse(localStorage.getItem(KEY)||'null')||{stock:20,transactions:[],stockHistory:[],cash:0};
+
+const rp=n=>'Rp'+Number(n||0).toLocaleString('id-ID');
+const save=()=>{localStorage.setItem(KEY,JSON.stringify(data));render()};
+const today=()=>new Date().toLocaleDateString('id-ID');
+function toast(t){let x=document.getElementById('toast');x.textContent=t;x.classList.add('show');setTimeout(()=>x.classList.remove('show'),1800)}
+function showPage(p){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));document.getElementById(p).classList.add('active');document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active',x.dataset.page===p));render();scrollTo(0,0)}
+function changeQty(n){let q=document.getElementById('qty');q.value=Math.max(1,Number(q.value||1)+n);updateTotal()}
+function updateTotal(){document.getElementById('saleTotal').textContent=rp(Math.max(1,Number(document.getElementById('qty').value||1))*SELL)}
+function sell(){
+ let q=Math.floor(Number(document.getElementById('qty').value)); if(!q||q<1)return toast('Jumlah tidak valid');
+ if(q>data.stock)return toast('Stok tidak cukup');
+ let total=q*SELL;
+ data.stock-=q; data.cash+=total;
+ data.transactions.unshift({id:Date.now(),type:'sale',date:today(),time:new Date().toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'}),customer:document.getElementById('customer').value||'Pelanggan',qty:q,total,cost:q*BUY});
+ document.getElementById('customer').value='';document.getElementById('qty').value=1;updateTotal();save();toast('Penjualan berhasil disimpan');
+}
+function addStock(){
+ let q=Math.floor(Number(document.getElementById('addStockQty').value));if(!q||q<1)return toast('Masukkan jumlah stok');
+ data.stock+=q;data.stockHistory.unshift({date:today(),type:'in',qty:q,note:document.getElementById('stockNote').value||'Stok masuk'});
+ document.getElementById('addStockQty').value='';document.getElementById('stockNote').value='';save();toast('Stok berhasil ditambahkan');
+}
+function expense(){
+ let a=Number(document.getElementById('expenseAmount').value);if(!a||a<1)return toast('Masukkan nominal');
+ if(a>data.cash)return toast('Saldo tidak mencukupi');
+ data.cash-=a;data.transactions.unshift({id:Date.now(),type:'expense',date:today(),time:new Date().toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'}),note:document.getElementById('expenseNote').value||'Pengeluaran',total:a});
+ document.getElementById('expenseAmount').value='';document.getElementById('expenseNote').value='';save();toast('Uang keluar berhasil disimpan');
+}
+function isToday(x){return x.date===today()}
+function stats(){
+ let sales=data.transactions.filter(x=>x.type==='sale'), exp=data.transactions.filter(x=>x.type==='expense');
+ let omzet=sales.reduce((s,x)=>s+x.total,0),cost=sales.reduce((s,x)=>s+x.cost,0),out=exp.reduce((s,x)=>s+x.total,0);
+ let st=sales.filter(isToday).reduce((s,x)=>s+x.total,0),it=sales.filter(isToday).reduce((s,x)=>s+x.total,0),ot=exp.filter(isToday).reduce((s,x)=>s+x.total,0);
+ return {omzet,cost,profit:omzet-cost,out,it,st,sales,exp};
+}
+function rows(arr,limit=100){
+ if(!arr.length)return '<div class="empty">Belum ada transaksi.</div>';
+ return '<div class="tablewrap"><table class="table"><thead><tr><th>Tanggal</th><th>Jenis</th><th>Keterangan</th><th>Qty</th><th>Total</th></tr></thead><tbody>'+
+ arr.slice(0,limit).map(x=>`<tr><td>${x.date}<br><span class="muted">${x.time||''}</span></td><td><span class="badge ${x.type==='sale'?'in':'out'}">${x.type==='sale'?'MASUK':'KELUAR'}</span></td><td>${x.type==='sale'?(x.customer||'Pelanggan'):(x.note||'Pengeluaran')}</td><td>${x.type==='sale'?x.qty:'—'}</td><td><b>${rp(x.total)}</b></td></tr>`).join('')+'</tbody></table></div>';
+}
+function render(){
+ let s=stats();
+ document.getElementById('saldo').textContent=rp(data.cash);document.getElementById('stokHero').textContent=data.stock+' galon';document.getElementById('omzetHero').textContent=rp(s.omzet);
+ document.getElementById('salesToday').textContent=rp(s.st);document.getElementById('inToday').textContent=rp(s.it);document.getElementById('outToday').textContent=rp(s.ot);document.getElementById('profit').textContent=rp(s.profit);
+ document.getElementById('quickStock').textContent=data.stock;document.getElementById('kasirStock').textContent=data.stock;document.getElementById('stockPage').textContent=data.stock;
+ document.getElementById('allIn').textContent=rp(s.omzet);document.getElementById('allOut').textContent=rp(s.out);
+ document.getElementById('reportSales').textContent=rp(s.omzet);document.getElementById('reportCost').textContent=rp(s.cost);document.getElementById('reportProfit').textContent=rp(s.profit);document.getElementById('reportBalance').textContent=rp(data.cash);
+ document.getElementById('recent').innerHTML=rows(data.transactions,5);document.getElementById('transactions').innerHTML=rows(data.transactions);
+ document.getElementById('stockHistory').innerHTML=data.stockHistory.length?rows(data.stockHistory.map(x=>({date:x.date,time:'',type:x.type==='in'?'sale':'expense',customer:x.note,qty:x.qty,total:0})):5:'<div class="empty">Belum ada riwayat stok.</div>';
+}
+function resetData(){if(confirm('Hapus semua data transaksi dan kembali ke stok awal 20 galon?')){data={stock:20,transactions:[],stockHistory:[],cash:0};save();toast('Data direset')}}
+function backup(){let blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='backup-toko-siger.json';a.click();URL.revokeObjectURL(a.href);toast('Backup dibuat')}
+render();updateTotal();
+</script>
+</body>
+</html>
