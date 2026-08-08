@@ -1,0 +1,9 @@
+{
+  "name":"TOKO SIGER",
+  "short_name":"SIGER",
+  "description":"Aplikasi kasir dan keuangan galon TOKO SIGER",
+  "start_url":"./",
+  "display":"standalone",
+  "background_color":"#f2f2f7",
+  "theme_color":"#0D47A1"
+}
